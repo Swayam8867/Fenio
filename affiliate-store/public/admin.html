@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin – My Picks</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><h1>Admin</h1><p><a href="/">View store</a></p></header>
+<main>
+  <section id="login" class="panel">
+    <label for="pw">Admin password</label>
+    <input id="pw" type="password" autocomplete="current-password">
+    <p><button class="btn" id="loginBtn">Log in</button></p>
+    <div class="msg err" id="loginMsg"></div>
+  </section>
+
+  <div id="dash" hidden>
+    <form id="form" class="panel">
+      <h2>Add a product</h2>
+      <label for="image">Product image</label>
+      <input id="image" name="image" type="file" accept="image/*" required>
+      <label for="name">Product name</label>
+      <input id="name" name="name" required maxlength="120">
+      <label for="price">Price (optional, e.g. $29.99)</label>
+      <input id="price" name="price" maxlength="30">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" maxlength="600"></textarea>
+      <label for="link">Affiliate link</label>
+      <input id="link" name="link" type="url" placeholder="https://..." required>
+      <p><button class="btn" type="submit">Publish product</button></p>
+      <div class="msg" id="msg"></div>
+    </form>
+    <h2>Your products</h2>
+    <div id="list"></div>
+  </div>
+</main>
+<script src="admin.js"></script>
+</body>
+</html>
