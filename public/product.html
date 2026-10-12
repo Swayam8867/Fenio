@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fenio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.back{display:inline-block;margin:0 0 20px;color:var(--muted);text-decoration:none;font-weight:600}
+.back:hover{color:var(--ink)}
+.detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
+.detail img{width:100%;border-radius:12px;border:1px solid var(--line);background:var(--line);aspect-ratio:1/1;object-fit:cover}
+.detail h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+.detail .price{font-weight:800;font-size:1.4rem;color:var(--accent);margin:0 0 14px}
+.detail .desc{color:var(--muted);white-space:pre-line;max-width:60ch;margin:0 0 24px}
+.detail .btn{font-size:1.05rem;padding:14px 28px}
+@media(max-width:720px){.detail{grid-template-columns:1fr;gap:20px}}
+</style>
+</head>
+<body>
+<header class="top"><h1><a href="index.html" style="text-decoration:none">Fenio</a></h1></header>
+<main>
+  <a class="back" href="index.html">&larr; All products</a>
+  <div id="detail" class="detail" hidden></div>
+  <p id="missing" class="empty" hidden>This product could not be found. <a href="index.html">See all products</a></p>
+</main>
+<footer>Affiliate disclosure: I am a Digistore24 affiliate and may earn a commission if you buy through these links, at no extra cost to you. Checkout, payment and delivery are handled by Digistore24 and the product vendor. I am not the vendor.</footer>
+<script>
+function esc(s){const d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML}
+const id = new URLSearchParams(location.search).get('id');
+fetch('/api/products').then(r => r.ok ? r.json() : Promise.reject())
+  .catch(() => fetch('products.json').then(r => r.json()))
+  .then(list => {
+    const p = list.find(x => x.id === id);
+    if (!p) { document.getElementById('missing').hidden = false; return; }
+    document.title = p.name + ' | Fenio';
+    const el = document.getElementById('detail');
+    el.innerHTML = `
+      <img src="${esc(p.image)}" alt="${esc(p.name)}">
+      <div>
+        <h1>${esc(p.name)}</h1>
+        ${p.price ? `<p class="price">${esc(p.price)}</p>` : ''}
+        <p class="desc">${esc(p.description)}</p>
+        <a class="btn" href="${esc(p.link)}" target="_blank" rel="sponsored noopener noreferrer">Buy now</a>
+      </div>`;
+    el.hidden = false;
+  })
+  .catch(() => { document.getElementById('missing').hidden = false; });
+</script>
+</body>
+</html>
