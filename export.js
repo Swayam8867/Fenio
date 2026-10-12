@@ -6,7 +6,7 @@ const out = path.join(__dirname, 'dist');
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(path.join(out, 'uploads'), { recursive: true });
 
-for (const f of ['index.html', 'style.css', 'app.js', 'manage.html']) {
+for (const f of ['index.html', 'product.html', 'style.css', 'app.js', 'manage.html']) {
   const src = path.join(__dirname, 'public', f);
   if (fs.existsSync(src)) fs.copyFileSync(src, path.join(out, f));
 }
