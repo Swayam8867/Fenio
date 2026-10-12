@@ -52,7 +52,7 @@ function buildLink(input) {
   }
   try {
     const u = new URL(input);
-    if (u.protocol !== 'https:' || !DS_HOST.test(u.hostname)) throw 0;
+     if (u.protocol !== 'https:') throw 0;
     return { link: u.toString() };
   } catch { return { error: 'Enter a Digistore24 product ID or a promolink starting with https://www.digistore24.com/redir/...' }; }
 }
